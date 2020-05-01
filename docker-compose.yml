@@ -1,27 +1,18 @@
-version: '3.4'
-
+#On macbook connect by IP directly, server will not be visible in discovery
+version: '3'
 services:
-  samba:
-    image: dperson/samba
-    environment:
-      TZ: 'EST5EDT'
-    networks:
-      - default
-    ports:
-      - "137:137/udp"
-      - "138:138/udp"
-      - "139:139/tcp"
-      - "445:445/tcp"
-    read_only: true
-    tmpfs:
-      - /tmp
-    restart: unless-stopped
-    stdin_open: true
-    tty: true
-    volumes:
-      - /mnt:/mnt:z
-      - /mnt2:/mnt2:z
-    command: '-s "Mount;/mnt" -s "Bobs Volume;/mnt2;yes;no;no;bob" -u "bob;bobspasswd" -p'
-
-networks:
-  default:
+    samba:
+        # image: dperson/samba
+        build: ./
+        ports:
+            - '137:137/udp'
+            - '138:138/udp'
+            - '139:139/tcp'
+            - '139:139/udp'
+            - '445:445/tcp'
+            - '445:445/udp'
+        volumes: 
+            - /z1s/back:/z1s/back
+            - /z3s/canFail:/z3s/canFail
+        restart: always
+        command: -n -p -u "smbnas;silakanmasuk" -s "back;/z1s/back;no;no;no;smbnas,smbnas,smbnas,smbnas" -s "canFail;/z3s/canFail;no;no;no;smbnas,smbnas,smbnas,smbnas"
