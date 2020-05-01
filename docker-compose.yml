@@ -5,8 +5,8 @@ services:
         # image: dperson/samba
         build: ./
         ports:
-            - '137:137/udp'
-            - '138:138/udp'
+            # - '137:137/udp'
+            # - '138:138/udp'
             - '139:139/tcp'
             - '139:139/udp'
             - '445:445/tcp'
@@ -15,4 +15,4 @@ services:
             - /z1s/back:/z1s/back
             - /z3s/canFail:/z3s/canFail
         restart: always
-        command: -n -p -u "smbnas;silakanmasuk" -s "back;/z1s/back;no;no;no;smbnas,smbnas,smbnas,smbnas" -s "canFail;/z3s/canFail;no;no;no;smbnas,smbnas,smbnas,smbnas"
+        command: -p -u "smbnas;silakanmasuk" -s "back;/z1s/back;no;no;no;smbnas,smbnas,smbnas,smbnas" -s "canFail;/z3s/canFail;no;no;no;smbnas,smbnas,smbnas,smbnas"
